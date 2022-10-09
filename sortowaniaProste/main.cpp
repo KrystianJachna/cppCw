@@ -5,10 +5,17 @@ using namespace std;
 void swap(int *arr, int i, int j) {
     int tmp = arr[i];
     arr[i] = arr[j];
-    arr[j] = arr[i];
+    arr[j] = tmp;
 }
 
-void bubbleSort(int * arr) {
+void printArr(int *arr) {
+    for (int i = 0; i < SIZE; ++i) {
+        cout << arr[i] << ", ";
+    }
+    cout << endl << endl;
+}
+
+void bubbleSort(int *arr) {
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE - 1; ++j)
             if (arr[j] > arr[j + 1])
@@ -16,7 +23,32 @@ void bubbleSort(int * arr) {
 
 }
 
-void insertionSort
+void insertionSort(int *arr) {
+    int j = 0;
+    int cur = 0;
+
+    for (int i = 1; i < SIZE; ++i) {
+        cur = arr[i];
+        j = i - 1;
+
+        while(j >= 0 && arr[j] > cur) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j+1] = cur;
+    }
+}
+
+void selectionSort(int *arr) {
+    for (int i = 0; i < SIZE - 1; ++i) {
+        int minID = i;
+
+        for (int j = i + 1; j < SIZE; ++j)
+            if (arr[j] < arr[minID])
+                minID = j;
+        swap(arr, minID, i);
+    }
+}
 
 int main() {
     int arr[SIZE] = {1, 68, 26, 75, 82, 36, 86, 14, 62, 6, 50, 47, 19, 91, 30, 77, 29, 66,
@@ -26,7 +58,11 @@ int main() {
             63, 98, 87, 33, 80, 12, 83, 49, 46, 48, 4, 59, 57, 56, 78, 89, 92, 25,
             84, 15, 42, 10, 99, 9, 37, 45, 73, 24};
 
-
+    printArr(arr);
+    //bubbleSort(arr);
+    //insertionSort(arr);
+    selectionSort(arr);
+    printArr(arr);
 
     return 0;
 }
