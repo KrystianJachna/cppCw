@@ -153,7 +153,33 @@ void QuickSort(int *arr, int L = 0, int R = SIZE -1) {
 
     QuickSort(arr, L, q - 1);
     QuickSort(arr, q + 1, R);
+}
 
+void Merge(int *arr, int L, int M, int R) {
+    int tmp[SIZE];
+
+    for (int i = L; i <= R; ++i)    tmp[i] = arr[i];
+
+    int i = L;                      // do iterowania po tablicy pomocniczej
+    int j = M + 1;                  // do iterowania po tablicy pomocniczej
+    int k = L;                      // do iterowania po tablicy glownej
+
+    while (i <= M && j <= R) {
+        if (tmp[i] <= tmp[j])       arr[k++] = tmp[i++];
+        else                        arr[k++] = tmp[j++];
+    }
+
+    while(i <= M)                   arr[k++] = tmp[i++];
+    while(j <= R)                   arr[k++] = tmp[j++];
+}
+
+void MergeSort(int *arr, int L = 0, int R = SIZE - 1) {
+    if (L >= R) return;
+
+    int M = (L + R) / 2;
+    MergeSort(arr, L, M);
+    MergeSort(arr, M + 1, R);
+    Merge(arr, L, M, R);
 }
 
 int main() {
@@ -171,7 +197,8 @@ int main() {
     //cocktailSort(arr);
     //stableSelectionSort(arr);
     //binaryInstertionSort(arr);
-    QuickSort(arr);
+    //QuickSort(arr);
+    MergeSort(arr);
     printArr(arr);
 
     return 0;
