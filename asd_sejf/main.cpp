@@ -1,73 +1,47 @@
 // Krystian Jachna - SEJF ZADANIE
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
+#include <cstdio>
+#define max_Size 10000
 
-using namespace std;
+bool readRods ( FILE* file, int m, int arr[] ) {
+    int y1;
+    int x1;
+    int x2;
+    int y2;
 
-void parseString( string str, int * Nums ) {
-    stringstream stream( str );
+    for ( int i = 0; i < m; ++i ) {
+        int ch = fscanf( file, "%d %d %d %d\n", &x1, &y1, &x2, &y2 );
 
-    int i = 0;
-    while( stream ) {
-        int num;
-        stream >> num;
-        Nums[i] = num;
-        ++i;
+        if ( ch != 4)
+            return false;
+
+        if ( arr[y1] < y2)
+            arr[y1] = y2;
     }
+
+    return true;
 }
 
-int readFile( int ** Rods ) {
-    fstream file;
-    file.open( "aaa.txt", ios::in );
-
-    if( !file.good() ) {
-        cout << "error" << std::endl;
-        exit( 0 );
-    }
-
-    string line;
-    int Nums [5];
-    getline( file, line );
-    parseString( line, Nums );
-
-    int n = Nums [0];
-    *Rods = new int [n];
-
-    for ( int i = 0; i < n; ++i)
-        *( *Rods + i ) = -1;
-
-    while(getline(file, line)) {
-        parseString(line, Nums);
-
-        if ( *( *Rods + Nums[1] ) < Nums[3] )
-            ( *( *Rods + Nums[1] )) = Nums[3];
-    }
-
-    file.close();
-    return n;
-}
-
-void safePattern( int * Rods, int size ) {
+bool findSafePattern( int arr[], int size ) {
     int start = 0;
     int stop = 0;
     int paths = 0;
 
-    fstream file;
-    file.open( "out.txt", ios::out );
+    FILE *file;
+    file = fopen( "out.txt", "w" );
 
-
+    if ( file == NULL )
+        return false;
 
     for ( int i = 0; i < size; ++i ) {
-        if ( Rods[i] == -1 ) {
+        if ( arr[i] == -1 ) {
             if ( i > start )
                 stop++;
         }
-        else if ( Rods[i] == i ) {
+        else if ( arr[i] == i ) {
 
              if (i > start) {
-                file << "(" << start << ", " << i << ")" << endl;
+                fprintf(file, "(%d,%d)\n", start, stop);
                 start = i;
                 stop = i;
                 paths++;
@@ -76,28 +50,71 @@ void safePattern( int * Rods, int size ) {
         } else {
 
             if ( i == start ) {
-                start = Rods[i];
-                stop = Rods[i];
+                start = arr[i];
+                stop = arr[i];
             } else if ( i >= stop ) {
-                file << "(" << start << ", " << i << ")" << endl;
-                start = Rods[i];
-                stop = Rods[i];
+                fprintf(file, "(%d,%d)\n", start, i);
+                start = arr[i];
+                stop = arr[i];
                 paths++;
             }
         }
     }
-    if ( start != size )
-        file << "(" << start << ", " << size << ")" <<  endl;
+    if ( start != size ) {
+        fprintf(file, "(%d,%d)\n", start, size);
+        paths++;
+    }
+    fprintf(file, "%d\n", paths);
 
-    file << paths;
-    file.close();
+    fflush(file);
+    fclose(file);
+
+    return true;
 }
 
 
-int main() {
-    int * Rods = nullptr;
-    int size = readFile( &Rods );
-    safePattern( Rods, size );
+int main( int argc, char *argv[] ) {
+    FILE* file;
+
+
+    if ( argc == 1 )
+        file = stdin;
+
+    else if ( argc == 2 ) {
+        file = fopen ( argv[1], "r" );
+
+        if ( file == NULL ) {
+            std::cout << "wrong filename " << argv[1] << "\n";
+            return 2;
+        }
+    }
+
+    int n = 0;
+    int m = 0;
+
+    if ( fscanf( file, "%d %d\n", &n, &m ) != 2 ) {
+        std::cout << "file's input problem\n";
+        fclose( file );
+        return 2;
+    }
+
+    int arr[max_Size];
+
+    for ( int i = 0; i < n; ++i )
+        arr[i] = -1;
+
+    if ( !readRods(file, m, arr) ) {
+        std::cout << "file's intput problem\n";
+        fclose( file );
+        return 2;
+    }
+
+    if ( !findSafePattern(arr, n)) {
+        std::cout << "cannot open file\n";
+    }
+    fclose( file );
+
+    return 0;
 }
 
 
@@ -124,6 +141,6 @@ TEST1.out
 (5, 6)
 (6, 8)
 (11, 13)
-4
+5
 
  */

@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/kryst/OneDrive/Pulpit/cpp/asd_sejf/cmake-build-debug"
+			"value" : "c:/Users/kryst/OneDrive/Pulpit/p/cpp/asd_sejf/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -623,7 +623,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/kryst/OneDrive/Pulpit/cpp/asd_sejf"
+			"value" : "C:/Users/kryst/OneDrive/Pulpit/p/cpp/asd_sejf"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1239,7 +1239,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/kryst/OneDrive/Pulpit/cpp/asd_sejf/cmake-build-debug"
+			"value" : "C:/Users/kryst/OneDrive/Pulpit/p/cpp/asd_sejf/cmake-build-debug"
 		},
 		{
 			"name" : "asd_sejf_IS_TOP_LEVEL",
@@ -1263,7 +1263,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/kryst/OneDrive/Pulpit/cpp/asd_sejf"
+			"value" : "C:/Users/kryst/OneDrive/Pulpit/p/cpp/asd_sejf"
 		}
 	],
 	"kind" : "cache",
